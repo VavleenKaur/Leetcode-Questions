@@ -3,6 +3,8 @@
     {
         return a[1]<b[1];
     }
+
+
 class Solution {
 public:
     
@@ -10,17 +12,13 @@ public:
     int findMinArrowShots(vector<vector<int>>& points) {
         int arrow=1;
         sort(points.begin(),points.end(),comp);
-        vector <int>temp;
-        temp=points[0];
-        for(auto bal:points)
+        int end=points[0][1];
+        for(int i=1;i<points.size();i++)
         {
-            if(bal[0]<=temp[1])
-            { 
-            }
-            else
+            if(points[i][0]>end)
             {
                 arrow++;
-                temp=bal;
+                end=points[i][1];
             }
         }
         
