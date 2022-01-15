@@ -6,7 +6,7 @@ public:
             return 0;
         }
        int i=0,j=0;
-        vector <int> count(300,0);
+        vector <int> count(255,0);
         count[s[i]]++;
         int res=1;
         while(j<s.length()-1)
