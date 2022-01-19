@@ -23,8 +23,7 @@ public:
     vector<vector<int>> combinationSum(vector<int>& c, int t) {
         vector <vector<int>> ans;
         vector <int> v;
-        int index=0;
-        findCombination(index,c,t,ans,v);
+        findCombination(0,c,t,ans,v);
         return ans;
     }
 };
