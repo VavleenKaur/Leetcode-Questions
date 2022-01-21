@@ -9,7 +9,7 @@ public:
         
         for(int i=ind;i<nums.size();i++)
         {
-            if(i>ind && nums[i]==nums[i-1])
+            if(i!=ind && nums[i]==nums[i-1])
             {
                 continue;
             }
