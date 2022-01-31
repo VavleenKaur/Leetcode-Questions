@@ -13,23 +13,22 @@ class Solution {
 public:
     int minDepth(TreeNode* root) {
         int minm=INT_MAX;
-        preorder(root,1,minm);
+        inorder(root,1,minm);
         return (minm!=INT_MAX)?minm:0;
     }
     
-    void preorder(TreeNode* root,int len,int &minm)
+    void inorder(TreeNode* root,int len,int &minm)
     {
         if(root==NULL)
         {
             return;
         }
-        
+        inorder(root->left,len+1,minm);
         if(root->left==NULL &&root->right==NULL)
         {
             minm=min(minm,len);
         }
-        preorder(root->left,len+1,minm);
-        preorder(root->right,len+1,minm);
+        inorder(root->right,len+1,minm);
     }
     
 };
