@@ -13,8 +13,6 @@ class Solution {
 public:
     
     int diameterOfBinaryTree(TreeNode* root) {
-      //return diamter -> max length from one node to another may or may  not including root
-          //hence take max of lh+rh of every node
         int maxDiameter=0;
         height(root,maxDiameter);
         return maxDiameter;
