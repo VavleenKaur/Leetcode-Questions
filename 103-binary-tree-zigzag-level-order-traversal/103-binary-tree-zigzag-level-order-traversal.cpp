@@ -22,22 +22,19 @@ public:
         int flag=0;
         while(!q.empty())
         {
-            vector<int>v1;
+            
             int size=q.size();
+            vector<int>v1(size);
             for(int i=0;i<size;i++)
             {
                 TreeNode* node=q.front();
                 q.pop();
-                v1.push_back(node->val);
+                int index=flag?size-i-1:i;
+                v1[index]=node->val;
                if(node->left) q.push(node->left);
                 if(node->right) q.push(node->right);
             }
             
-            if(flag==1)
-            {
-                reverse(v1.begin(),v1.end());
-                
-            }
             v2.push_back(v1);
             flag=!flag;
         }
