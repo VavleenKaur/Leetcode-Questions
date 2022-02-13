@@ -10,14 +10,11 @@ public:
     }
     void recursion(int i,vector<int>&nums,vector<int>&v)
     {
-        if(i==nums.size())
-        {
-            subset.push_back(v);
-            return;
-        }
-        v.push_back(nums[i]);
+        subset.push_back(v);
+        for(;i<nums.size();i++)
+        {v.push_back(nums[i]);
         recursion(i+1,nums,v);       
         v.pop_back();
-        recursion(i+1,nums,v);
+        }
     }
 };
