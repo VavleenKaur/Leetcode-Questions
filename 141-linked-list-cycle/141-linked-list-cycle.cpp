@@ -13,16 +13,17 @@ public:
         {
             return false;
         }
-        unordered_map<ListNode*,bool> mp_visited;
-        ListNode* temp=head;
-        while(temp!=NULL)
+        ListNode* slow=head;
+        ListNode* fast=head->next;
+        
+        while(fast!=NULL && fast->next!=NULL)
         {
-            if(mp_visited[temp]==true)
+            if(slow==fast)
             {
                 return true;
             }
-            mp_visited[temp]=true;
-            temp=temp->next;
+            slow=slow->next;
+            fast=fast->next->next;
         }
         return false;
     }
