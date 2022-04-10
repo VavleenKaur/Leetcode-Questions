@@ -3,7 +3,7 @@ public:
     int calPoints(vector<string>& ops) {
         stack<int> st;
        for(int i=0;i<ops.size();i++) 
-       {   if(ops[i][0]=='-' && isdigit(ops[i][1]) || isdigit(ops[i][0]))
+       {   if(ops[i][0]=='-' || isdigit(ops[i][0]))
            {  int val=stoi(ops[i]);
               st.push(val);
            }
