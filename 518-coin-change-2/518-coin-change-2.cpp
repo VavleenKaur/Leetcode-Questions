@@ -15,22 +15,24 @@ public:
     }
     int change(int amount, vector<int>& coins) {
        int n=coins.size();
-        vector<vector<int>>dp(n,vector<int>(amount+1,-1));
+       // vector<vector<int>>dp(n,vector<int>(amount+1,-1));
+        vector<int> prev(amount+1,0);
         for(int j=0;j<=amount;j++)
         {
-            if(j%coins[0]==0) dp[0][j]=1;
-            else dp[0][j]=0;
+            if(j%coins[0]==0) prev[j]=1;
+            else prev[j]=0;
         }
         for(int i=1;i<n;i++)
-        {
+        {   vector<int>cur(amount+1,0);
             for(int j=0;j<=amount;j++)
             {
-                int notake=dp[i-1][j];
+                int notake=prev[j];
                 int take=0;
-                if(coins[i]<=j) take=dp[i][j-coins[i]];
-                dp[i][j]=notake+take;
+                if(coins[i]<=j) take=cur[j-coins[i]];
+                cur[j]=notake+take;
             }
+         prev=cur;
         }
-        return dp[n-1][amount];
+        return prev[amount];
     }
 };
