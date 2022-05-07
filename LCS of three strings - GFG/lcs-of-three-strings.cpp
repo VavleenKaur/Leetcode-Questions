@@ -19,30 +19,8 @@ int main()
 
 int LCSof3 (string A, string B, string C, int n1, int n2, int n3)
 {
-    vector<vector<vector<int>>>dp(n1+1,vector<vector<int>>(n2+1,vector<int>(n3+1,-1)));
-    
-    for(int j=0;j<=n2;j++)
-    {
-        for(int k=0;k<=n3;k++)
-        {
-            dp[0][j][k]=0;
-        }
-    }
-    for(int i=0;i<=n1;i++)
-    {
-        for(int k=0;k<=n3;k++)
-        {
-            dp[i][0][k]=0;
-        }
-    }
-    
-    for(int i=0;i<=n1;i++)
-    {
-        for(int j=0;j<=n2;j++)
-        {
-            dp[i][j][0]=0;
-        }
-    }
+    vector<vector<int>>prev(n2+1,vector<int>(n3+1,0));
+    vector<vector<int>>cur(n2+1,vector<int>(n3+1,0));
     
     for(int i=1;i<=n1;i++)
     {
@@ -52,14 +30,15 @@ int LCSof3 (string A, string B, string C, int n1, int n2, int n3)
             {
                 if(A[i-1]==B[j-1] && B[j-1]==C[k-1])
                 {
-                    dp[i][j][k]=1+dp[i-1][j-1][k-1];
+                    cur[j][k]=1+prev[j-1][k-1];
                 }
                 else
                 {
-                    dp[i][j][k]=max(dp[i-1][j][k],max(dp[i][j-1][k],dp[i][j][k-1]));
+                    cur[j][k]=max(prev[j][k],max(cur[j-1][k],cur[j][k-1]));
                 }
             }
         }
+        prev=cur;
     }
-    return dp[n1][n2][n3];
+    return prev[n2][n3];
 }
