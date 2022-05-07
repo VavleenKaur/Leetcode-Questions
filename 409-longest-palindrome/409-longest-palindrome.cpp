@@ -9,17 +9,27 @@ public:
         for(int i=0;i<s.size();i++)
         {
             mp[s[i]]++;
-            if(mp[s[i]]%2==0)
-            {  len+=mp[s[i]];
-                mp[s[i]]=0;
+          
+        }
+        for(auto it:mp)
+        {
+            if( it.second%2==0 )
+            {
+                len+=it.second;
+            }
+            if(it.second%2!=0 && it.second!=1)
+            {
+                len+=it.second-1;
+                char c=it.first;
+                mp[c]=1;
             }
         }
         for(auto it:mp)
         {
-            if( it.second==1 )
+            if(it.second==1)
             {
                 len++;
-                return len;
+                break;
             }
         }
         return len;
