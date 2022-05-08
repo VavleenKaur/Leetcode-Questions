@@ -5,12 +5,12 @@ public:
         int prev2=cost[0],prev=cost[1];
         for(int i=2;i<n;i++)
         {
-            int fs=prev+cost[i];
-            int ss=prev2+cost[i];
-            int curi=min(fs,ss);
+            int f=prev2+cost[i];
+            int s=prev+cost[i];
+             int cur=min(f,s);
             prev2=prev;
-            prev=curi;
+            prev=cur;
         }
-        return min(prev,prev2);
-        }
+        return min(prev2,prev);
+    }
 };
