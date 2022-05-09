@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int f(int ind,int prev_ind,vector<int>&nums,vector<vector<int>>&dp)
+   /* int f(int ind,int prev_ind,vector<int>&nums,vector<vector<int>>&dp)
     {   if(ind==nums.size()) return 0;
         if(dp[ind][prev_ind+1]!=-1) return dp[ind][prev_ind+1];
         int len=f(ind+1,prev_ind,nums,dp);
@@ -9,23 +9,19 @@ public:
             len=max(len,1+f(ind+1,ind,nums,dp));
         }
         return dp[ind][prev_ind+1]=len;
-    }
+    }*/
     int lengthOfLIS(vector<int>& nums) {
         int n=nums.size();
-       vector<int>ahead(n+1,0),cur(n+1,0);
-        for(int i=n-1;i>=0;i--)
-        {
-            for(int j=i-1;j>=-1;j--)
+       vector<int>dp(n,1);
+        for(int i=0;i<n;i++){
+            for(int j=0;j<i;j++)
             {
-                int len=ahead[j+1];
-        if(j==-1 || nums[i]>nums[j])
-        {
-            len=max(len,1+ahead[i+1]);
-        }
-               cur[j+1]=len;
+                if(nums[i]>nums[j])
+                {
+                    dp[i]=max(dp[i],1+dp[j]);
+                }
             }
-             ahead=cur;   
-        }
-        return ahead[0];
+    }
+    return *max_element(dp.begin(),dp.end());
     }
 };
