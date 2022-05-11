@@ -22,7 +22,7 @@ class Solution
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
 	    // using dfs
-	    vector<int>visited(V,0);
+	    /*vector<int>visited(V,0);
 	    stack<int>st;
 	    for(int i=0;i<V;i++)
 	    {
@@ -37,6 +37,39 @@ class Solution
 	        topo.push_back(st.top());
 	        st.pop();
 	    }
+	    return topo;*/
+	    
+	    vector<int>indegree(V,0);
+	    queue<int>q;
+	    for(int i=0;i<V;i++)
+	    {
+	        for(auto it:adj[i])
+	        {
+	            indegree[it]++;
+	        }
+	    }
+	    for(int i=0;i<V;i++)
+	    {
+	        if(indegree[i]==0)
+	        {
+	            q.push(i);
+	        }
+	    }
+	    vector<int>topo;
+	    while(!q.empty())
+	    {
+	        int f=q.front();
+	        q.pop();
+	        topo.push_back(f);
+	        for(auto it:adj[f])
+	        {   indegree[it]--;
+	            if(indegree[it]==0)
+	            {
+	                q.push(it);
+	            }
+	        }
+	    }
+	    
 	    return topo;
 	}
 };
