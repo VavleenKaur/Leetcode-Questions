@@ -7,9 +7,9 @@ class Solution {
   public:
     // Function to detect cycle in an undirected graph.
     
-    bool checkForcycle(int ind,vector<int>&visited,vector <int> adj[])
+    bool checkForcycle(int ind,int parent,vector<int>&visited,vector <int> adj[])
 {
-    queue<pair<int,int>>q;
+   /* queue<pair<int,int>>q;
     q.push({ind,-1});
     visited[ind]=1;
     while(!q.empty())
@@ -29,13 +29,29 @@ class Solution {
             }
         }
     }
+    return false;*/
+    
+    
+    visited[ind]=1;
+    for(auto it:adj[ind])
+    {
+        if(!visited[it])
+        {
+          if(checkForcycle(it,ind,visited,adj)) 
+          {return true; }
+        }
+        else if(visited[it] && it!=parent) 
+        {
+            return true;
+        }
+    }
     return false;
 }
     bool isCycle(int V, vector<int> adj[]) {
         vector<int>visited(V,0);
         for(int i=0;i<V;i++)
      {  if(!visited[i])
-        {if(checkForcycle(i,visited,adj)) return true;
+        {if(checkForcycle(i,-1,visited,adj)) return true;
         }
      }
      return false;
