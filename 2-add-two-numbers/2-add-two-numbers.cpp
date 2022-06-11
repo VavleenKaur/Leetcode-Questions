@@ -10,36 +10,72 @@
  */
 class Solution {
 public:
-    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-         return  solve(l1,l2,0);
+    void insertAttail(ListNode* &anshead,ListNode* &anstail,int Val)
+    {
+        if(anshead==NULL)
+        {
+        ListNode *temp=new ListNode(Val);
+            anshead=temp;
+            anstail=temp;
+            return;
+        }
+        else
+        {   ListNode *temp=new ListNode(Val);
+            anstail->next=temp;
+            anstail=temp;
+            return;
+        }
         
     }
-    ListNode* solve(ListNode* l1, ListNode* l2,int c)
-    {
-        if(l1==NULL && l2==NULL)
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+       ListNode *anshead=NULL;
+        ListNode *anstail=NULL;
+        int carry=0;
+        while(l1!=NULL || l2!=NULL || carry!=0)
+        {  int val1=0,val2=0;
+            if(l1!=NULL)
         {
-            if(c)
-            return new ListNode(c);
-            return l1;
+            val1=l1->val;
         }
-        if(l1==NULL)
+         if(l2!=NULL)
         {
-            l2->val+=c;
-            l2->next=solve(NULL,l2->next,l2->val/10);
-            l2->val%=10;
-            return l2;
+            val2=l2->val;
         }
-        if(l2==NULL)
+            int Val=carry+val1+val2;
+            int sum=Val%10;
+            carry=Val/10;
+            insertAttail(anshead,anstail,sum);
+            if(l1!=NULL)
+            {l1=l1->next;}
+            if(l2!=NULL){l2=l2->next;}
+        }
+      /*  while(l1!=NULL)
         {
-          l1->val+=c;
-          l1->next=solve(l1->next,NULL,l1->val/10);
-          l1->val%=10; 
-            return l1;
+            int Val=carry+l1->val;
+            int sum=Val%10;
+            carry=Val/10;
+            insertAttail(anshead,anstail,sum);
+            l1=l1->next;
+            //l2=l2->next;
         }
-        l1->val+=(l2->val+c);
-        l1->next=solve(l1->next,l2->next,l1->val/10);
-        l1->val%=10;
-        return l1;
-        
+         while(l2!=NULL)
+        {
+            int Val=carry+l2->val;
+            int sum=Val%10;
+            carry=Val/10;
+            insertAttail(anshead,anstail,sum);
+            //l1=l1->next;
+            l2=l2->next;
+        }
+        while(carry>0)
+        {
+            int Val=carry;
+            int sum=Val%10;
+            carry=Val/10;
+            insertAttail(anshead,anstail,sum);
+            //l1=l1->next;
+            //l2=l2->next;
+        }*/
+        return anshead;
     }
 };
