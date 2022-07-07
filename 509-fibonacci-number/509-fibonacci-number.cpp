@@ -1,15 +1,22 @@
 class Solution {
 public:
-    int f(int ind,vector<int>&arr)
-    {
-        if(ind==0 || ind==1) return ind;
-        arr[0]=0;
-        arr[1]=1;
-        if(arr[ind]!=0) return arr[ind];
-       return arr[ind]=f(ind-1,arr)+f(ind-2,arr);
-    }
     int fib(int n) {
-       vector<int>arr(n+1,0);
-        return f(n,arr);
+        if(n==0 || n==1)return n;
+vector<int> dp(n+1,-1);
+  
+  dp[0]= 0;
+  dp[1]= 1;
+  
+  for(int i=2; i<=n; i++){
+      dp[i] = dp[i-1]+ dp[i-2];
+  }
+ return dp[n];
+        
     }
+    // int fibo(int n,vector<int>&dp)
+    // {
+    //     if(n<=1) return dp[n]=n;
+    //     if(dp[n]!=-1) return dp[n];
+    //     return dp[n]=fib(n-1)+fib(n-2);
+    // }
 };
