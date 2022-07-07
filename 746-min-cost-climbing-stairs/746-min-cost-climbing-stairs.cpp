@@ -7,15 +7,18 @@ public:
             return n?cost[0]:0;
         }
         vector<int>dp(n,-1);
-        dp[0]=cost[0];
-        dp[1]=cost[1];
+        int prev2=cost[0];
+        int prev=cost[1];
         for(int i=2;i<n;i++)
         {
-            int f_step=dp[i-1]+cost[i];
-            int s_step=dp[i-2]+cost[i];
-            dp[i]=min(f_step,s_step);
+            int f_step=prev2+cost[i];
+            int s_step=prev+cost[i];
+            int curr=min(f_step,s_step);
+            dp[i]=curr;
+            prev2=prev;
+            prev=curr;
         }
-        return min(dp[n-1],dp[n-2]);
+        return min(prev,prev2);
     }
     // int memo(vector<int>& cost,int ind)
     // {
