@@ -16,8 +16,19 @@ public:
     int maxProfit(vector<int>& prices) {
        int k=2;
        int n=prices.size();
-       vector<vector<vector<int>>>dp(n+1,vector<vector<int>>(2,vector<int>(k+1,-1)));
-        return memo(0,1,k,dp,prices,n);
-        
+       vector<vector<vector<int>>>dp(n+1,vector<vector<int>>(2,vector<int>(k+1,0)));
+        for(int ind=n-1;ind>=0;ind--)
+        {
+            
+                for(int trans=1;trans<=k;trans++)
+                {
+           dp[ind][1][trans]=max(-prices[ind]+dp[ind+1][0][trans],0+dp[ind+1][1][trans]);
+       
+            dp[ind][0][trans]=max(prices[ind]+dp[ind+1][1][trans-1],0+dp[ind+1][0][trans]);
+    
+                }
+            
+        }
+        return dp[0][1][k];
     }
 };
