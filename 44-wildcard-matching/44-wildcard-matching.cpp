@@ -1,39 +1,39 @@
 class Solution {
 public:
-    
-    bool isMatch(string s, string p) {
-       int n=s.size();
-        int m=p.size();
-	vector<vector<bool>>dp(n+1,vector<bool>(m+1,false));
-	dp[0][0]=true;
-	for(int j=1;j<=m;j++)
-	{
-        bool flg=true;
-		for(int a=1;a<=j;a++)
+    bool memo(string &s, string &p,int inds, int indp,vector<vector<int>>&dp)
+    {   if(inds==0 && indp==0) return true;
+        if(indp==0) return false;
+        if(inds==0) 
+        {
+            for(int i=1;i<=indp;i++)
             {
-                if(p[a-1]!='*')
+                if(p[i-1]!='*')
                 {
-                    flg=false;
-					break;
+                    return false;
                 }
             }
-		dp[0][j]=flg;
-
-	}
-	for(int i=1;i<=n;i++)
-	{  dp[i][0]=false;
-	}
-	for(int i=1;i<=n;i++)
-	{
-		for(int j=1;j<=m;j++)
-		{
-			if(s[i-1]==p[j-1] || p[j-1]=='?') {
-				dp[i][j]=dp[i-1][j-1];}
-        else if(p[j-1]=='*') 
-		{dp[i][j]= dp[i-1][j] | dp[i][j-1];}
-        else {dp[i][j]= false;}
-		}
-	}
-     return dp[n][m];
+            return true;
+        }
+        
+        if(dp[inds][indp]!=-1) return dp[inds][indp];
+        if(s[inds-1]==p[indp-1] || p[indp-1]=='?')
+        {
+            return dp[inds][indp]=memo(s,p,inds-1,indp-1,dp);
+        }
+        else if(p[indp-1]=='*')
+        {
+            return dp[inds][indp]=memo(s,p,inds,indp-1,dp)| memo(s,p,inds-1,indp,dp);
+        }
+        else 
+        {
+            return dp[inds][indp]=false;
+        }
+        
+    }
+    bool isMatch(string s, string p) {
+        int lens=s.size();
+        int lenp=p.size();
+        vector<vector<int>>dp(lens+1,vector<int>(lenp+1,-1));
+        return memo(s,p,lens,lenp,dp);
     }
 };
