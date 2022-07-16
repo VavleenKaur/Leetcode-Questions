@@ -33,10 +33,13 @@ public:
     bool isMatch(string s, string p) {
         int lens=s.size();
         int lenp=p.size();
-        vector<vector<bool>>dp(lens+1,vector<bool>(lenp+1,false));
-        dp[0][0]=true;
+        vector<bool>prev(lens+1,false);
+        vector<bool>curr(lens+1,false);
+        prev[0]=true;
         for(int indp=1;indp<=lenp;indp++)
-        {   bool flag=true;
+        {
+            
+             bool flag=true;
             for(int i=1;i<=indp;i++)
             {
                 if(p[i-1]!='*')
@@ -45,22 +48,24 @@ public:
                     break;
                 }
             }
-            dp[0][indp]=flag;
-        }
-        for(int inds=1;inds<=lens;inds++)
-        {
-            for(int indp=1;indp<=lenp;indp++)
+        curr[0]=flag;
+            for(int inds=1;inds<=lens;inds++)
              { 
                 if(s[inds-1]==p[indp-1] || p[indp-1]=='?')
               {
-                 dp[inds][indp]=dp[inds-1][indp-1];
+                 curr[inds]=prev[inds-1];
               }
                else if(p[indp-1]=='*')
               {
-                dp[inds][indp]=dp[inds][indp-1] | dp[inds-1][indp];
+                curr[inds]=curr[inds-1] | prev[inds];
               }
+                else
+                {
+                    curr[inds]=false;
+                }
             }
+            prev=curr;
         }
-        return dp[lens][lenp];
+        return prev[lens];
     }
 };
