@@ -11,32 +11,24 @@ public:
           adj[edges[i][1]].push_back(edges[i][0]);
         }
         vector<int>visited(n,0);
-        int i=source;
-            if(!visited[i])
-            {   bool flag=false;
+        int i=source;  
                 queue<int>q;
                 q.push(i);
                 visited[i]=1;
                 while(!q.empty())
                 {  
                     int node=q.front();
-                    if(node==source ) {
-                        flag=true;
-                        cout<<node<<"o"<<endl;
-                    }
                     q.pop();
                     for(auto it:adj[node])
                     {
                         if(!visited[it])
                         {q.push(it);
                         visited[it]=1;
-                        if(flag==true &&  it==destination) {         cout<<it<<endl;
+                        if(it==destination) {
                             return true;
-                                                                                             }
+                        }                                                                    }
                     }
                     }
-                }
-            }
               return false;
     }
 };
