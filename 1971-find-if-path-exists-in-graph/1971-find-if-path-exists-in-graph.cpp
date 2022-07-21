@@ -20,7 +20,7 @@ public:
                 while(!q.empty())
                 {  
                     int node=q.front();
-                    if(node==source || node==destination) {
+                    if(node==source ) {
                         flag=true;
                         cout<<node<<"o"<<endl;
                     }
@@ -30,7 +30,7 @@ public:
                         if(!visited[it])
                         {q.push(it);
                         visited[it]=1;
-                        if(flag==true && ((it==source) || it==destination)) {         cout<<it<<endl;
+                        if(flag==true &&  it==destination) {         cout<<it<<endl;
                             return true;
                                                                                              }
                     }
