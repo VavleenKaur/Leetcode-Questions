@@ -1,18 +1,20 @@
 class Solution {
 public:
-    bool memo(int inds,int indt,string s, string t)
+    bool memo(int inds,int indt,string s, string t,vector<vector<int>>&dp)
     {
         if(inds<0) return true;
         if(inds>=0 && indt<0) return false;
-        if(s[inds]==t[indt]) return memo(inds-1,indt-1,s,t);
+        if(dp[inds][indt]!=-1) return dp[inds][indt];
+        if(s[inds]==t[indt]) return dp[inds][indt]=memo(inds-1,indt-1,s,t,dp);
         else
         {
-            return memo(inds,indt-1,s,t);
+            return dp[inds][indt]=memo(inds,indt-1,s,t,dp);
         }
     }
     bool isSubsequence(string s, string t) {
         int lens=s.size();
         int lent=t.size();
-        return memo(lens-1,lent-1,s,t);
+        vector<vector<int>>dp(lens+1,vector<int>(lent+1,-1));
+        return memo(lens-1,lent-1,s,t,dp);
     }
 };
