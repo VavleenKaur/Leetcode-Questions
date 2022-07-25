@@ -1,29 +1,18 @@
 class Solution {
 public:
-     bool isSubs(string& s, string& t, int m, int n)
+    bool memo(int inds,int indt,string s, string t)
     {
-        if(m == s.length())
-            return true;
-        if(n == t.length())
-            return false;
-        
-        // If last characters of two
-        // strings are matching
-        if (s[m] == t[n])
-            return isSubs(s, t, m + 1, n + 1);
- 
-        // If last characters are
-        // not matching
-        return isSubs(s, t, m, n+1);
+        if(inds<0) return true;
+        if(inds>=0 && indt<0) return false;
+        if(s[inds]==t[indt]) return memo(inds-1,indt-1,s,t);
+        else
+        {
+            return memo(inds,indt-1,s,t);
+        }
     }
-    
-    
     bool isSubsequence(string s, string t) {
-        
-       if( isSubs(s,t,0,0))
-           return true;
-        
-        return false;
-        
+        int lens=s.size();
+        int lent=t.size();
+        return memo(lens-1,lent-1,s,t);
     }
 };
