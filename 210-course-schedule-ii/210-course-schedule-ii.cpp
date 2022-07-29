@@ -1,22 +1,5 @@
 class Solution {
 public:
-   bool dfs(int node, vector<int>&visited,vector<int>&dfs_visited,vector<int>adj[],stack<int>&s)
-    {
-          visited[node] = 1;
-          dfs_visited[node]=1;
-    for (auto it: adj[node]) {
-      if (!visited[it]) {
-        if(dfs(it, visited,dfs_visited, adj,s)) return true;
-      }
-        else if(dfs_visited[it])
-        {
-            return true;
-        }
-    }
-    dfs_visited[node]=0;
-    s.push(node);
-       return false;
-    }
     vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
         // dfs approach
         int v=numCourses;
@@ -26,25 +9,46 @@ public:
             adj[prerequisites[i][1]].push_back(prerequisites[i][0]);
         }
         vector<int>visited(v,0);
-        vector<int>dfs_visited(v,0);
+        vector<int>indegree(v,0);
+        queue<int>q;
+        for(int i=0;i<v;i++)
+        {
+            for(auto it:adj[i])
+            {
+                indegree[it]++;
+            }
+        }
+        for(int i=0;i<v;i++)
+        {
+            if(indegree[i]==0)
+                q.push(i);
+        }
         vector<int>topo;
-        stack<int> s;
         for(int i=0;i<v;i++)
         {
             if(!visited[i])
             {
-               if(dfs(i,visited,dfs_visited,adj,s))
+               while(!q.empty())
                {
-                    topo.clear();
-                   return topo;
+                   int node=q.front();
+                   q.pop();
+                   topo.push_back(node);
+                   visited[node]=1;
+                   for(auto it:adj[node])
+                   {
+                       if(!visited[it])
+                       {
+                           indegree[it]--;
+                           if(indegree[it]==0)
+                           {
+                               q.push(it);
+                           }
+                       }
+                   }
                }
             }
         }
-        while (!s.empty()) {
-            cout<<s.top();
-        topo.push_back(s.top());
-        s.pop();
-      }
-        return topo;
+     if(topo.size()!=v) topo.clear();
+     return topo;
     }
 };
