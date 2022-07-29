@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
-        // dfs approach
+        // bfs approach
         int v=numCourses;
         vector<int>adj[v];
         for(int i=0;i<prerequisites.size();i++)
