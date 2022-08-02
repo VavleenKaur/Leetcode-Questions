@@ -1,7 +1,6 @@
 # Write your MySQL query statement below
-SELECT c.name AS Customers FROM Customers c 
-WHERE c.id NOT IN (
-SELECT o.customerId FROM Customers c 
-INNER JOIN Orders o
-ON o.customerId=c.id
-);
+SELECT Customers.name AS Customers
+FROM Customers
+LEFT JOIN Orders
+ON Customers.Id = Orders.CustomerId
+WHERE Orders.CustomerId IS NULL ;
