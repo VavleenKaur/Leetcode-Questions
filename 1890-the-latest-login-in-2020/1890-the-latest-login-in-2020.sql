@@ -1,0 +1,5 @@
+# Write your MySQL query statement below
+select distinct user_id,max(time_stamp) as last_stamp
+from Logins
+where Year(time_stamp)=2020
+group by 1;
