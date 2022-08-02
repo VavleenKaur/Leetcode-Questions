@@ -5,5 +5,4 @@ SET sex=
  WHEN sex='m' THEN 'f'
  ELSE 'm'
  END
-)
-;
+);
