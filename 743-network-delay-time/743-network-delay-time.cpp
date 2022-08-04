@@ -1,46 +1,44 @@
 class Solution {
 public:
     int networkDelayTime(vector<vector<int>>& times, int n, int k) {
-         // just created a dis vector that will contain the distance for reaching nodes
-        // and make dik[k] initially 0 because we will start dearching from k 
-        vector<int>dis(n+1,INT_MAX);
-        dis[k]=0;
-        
-        // we are using here bellman ford algorithm
-        // we will update our dis vector upto (n-1) times according to bellman's ford algo
-        for(int i=1;i<n;i++)
+       vector<pair<int,int>>adj[n+1]; 
+        for(int i=0;i<times.size();i++)
         {
-            // just checking for all the nodes that are available in our graph
-            for(int j=0;j<times.size();j++)
+            adj[times[i][0]].push_back({times[i][2],times[i][1]});
+        } priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
+        vector<int>min_time(n+1,INT_MAX);
+        pq.push({0,k});
+        min_time[k]=0;
+        
+        while(!pq.empty())
+        {
+            int curr_node=pq.top().second;
+            int curr_time=pq.top().first;
+            pq.pop();
+            
+            for(auto it:adj[curr_node])
             {
-                // extracting the information form the current value
-                int u=times[j][0];     // source
-                int v=times[j][1];     // destination
-                int w=times[j][2];     // weight
-                 
-                // current source is not finite value then we can not pick that path 
-                
-                // so just check current source is finite or not
-                // and we are having better path for reaching V from U by using W
-                if(dis[u]!=INT_MAX && dis[u]+w<dis[v])
+                int next_node=it.second;
+                int next_time=it.first;
+                if(curr_time+next_time<min_time[next_node])
                 {
-                    // if we are having better path available then just update our dis
-                    dis[v]=w+dis[u];
+                    min_time[next_node]=curr_time+next_time;
+                    pq.push({min_time[next_node],next_node});
                 }
             }
         }
-		 
-        // take out the best value to reach n from k
-        int ans=0;
+        int maxi=0;
         for(int i=1;i<=n;i++)
         {
-            // If any node is not reachable from k
-            if(dis[i]==INT_MAX) 
-                return -1;  
-            
-            // else take best
-            ans=max(ans,dis[i]);
+           if(min_time[i]>=INT_MAX)
+           {
+               return -1;
+           }
+            else
+            {
+                maxi=(min_time[i]>maxi)?min_time[i]:maxi;
+            }
         }
-        return ans;
+        return maxi;
     }
 };
