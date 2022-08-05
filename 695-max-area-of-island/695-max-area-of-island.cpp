@@ -1,38 +1,31 @@
 class Solution {
 public:
-    int findArea(vector<vector<int>>& grid,int i,int j,int &area)
+    void dfs(vector<vector<int>>& grid, int i, int j,int m,int n,int &area)
     {
-        if(i<0||j<0||i>=grid.size()||j>=grid[0].size())
-        {
-            return 0;
-        }
-        if(grid[i][j]==0)
-        {
-            return 0;
-        }
-        area++;
+        if(i<0 || j<0 || i>=m || j>=n || grid[i][j]==0) return;
+       area+=grid[i][j];
         grid[i][j]=0;
-        findArea(grid,i+1,j,area);
-        findArea(grid,i-1,j,area);
-        findArea(grid,i,j+1,area);
-        findArea(grid,i,j-1,area);
-        return area;
+    dfs(grid,i+1,j,m,n,area);
+   dfs(grid,i-1,j,m,n,area);
+   dfs(grid,i,j+1,m,n,area);
+   dfs(grid,i,j-1,m,n,area);
+    
     }
     
     int maxAreaOfIsland(vector<vector<int>>& grid) {
-        int res=0,area=0;
-        for(int i=0;i<grid.size();i++)
+        int maxArea=0,m=grid.size(),n=grid[0].size();
+        for(int i=0;i<m;i++)
         {
-            for(int j=0;j<grid[0].size();j++)
-            {    area=0;
+            for(int j=0;j<n;j++)
+            {   
                 if(grid[i][j]==1)
-                {   
-                    res=max(res,findArea(grid,i,j,area));
+                {
+                   int area=0;
+                    dfs(grid,i,j,m,n,area);
+                    maxArea=max(maxArea,area);
                 }
-                
             }
         }
-        
-        return res;
+        return maxArea;
     }
 };
