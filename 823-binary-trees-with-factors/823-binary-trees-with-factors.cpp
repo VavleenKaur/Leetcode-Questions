@@ -4,16 +4,20 @@ public:
     int numFactoredBinaryTrees(vector<int>& arr) {
         sort(arr.begin(),arr.end());
         int n=arr.size();
-        map<long,long>mp;
+        map<long,long>mp,ifPresent;
         mp[arr[0]]=1;
-        for(int i=1;i<arr.size();i++)
+        for(int i=0;i<n;i++)
+        {
+            ifPresent[arr[i]]=1;
+        }
+        for(int i=1;i<n;i++)
         {
             mp[arr[i]]=1;
             for(int j=0;j<i;j++)
             {
                 if(arr[i]%arr[j]==0)
                 {
-                    if(find(arr.begin(),arr.end(),arr[i]/arr[j])!=arr.end())
+                    if(ifPresent[arr[i]/arr[j]])
                     {
                         mp[arr[i]]+=mp[arr[j]]*mp[arr[i]/arr[j]];
                     }
