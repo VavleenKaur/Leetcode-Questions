@@ -1,21 +1,21 @@
 class Solution {
 public:
-    bool recur(int index, string s, set<string>&st, vector<string>& wordDict,vector<int>&dp)
-    {
-        if(index==s.size())
-            return true;
-        if(dp[index]!=-1) return dp[index];
-        for(int i=index;i<s.size();i++)
-        {  string str=s.substr(index,i-index+1);
-            if(st.find(str)!=st.end())
-            {
-                if(recur(i+1,s,st,wordDict,dp)) return dp[index]=true;
+//     bool recur(int index, string s, set<string>&st, vector<string>& wordDict,vector<int>&dp)
+//     {
+//         if(index==s.size())
+//             return true;
+//         if(dp[index]!=-1) return dp[index];
+//         for(int i=index;i<s.size();i++)
+//         {  string str=s.substr(index,i-index+1);
+//             if(st.find(str)!=st.end())
+//             {
+//                 if(recur(i+1,s,st,wordDict,dp)) return dp[index]=true;
                 
-            }
-        }
-        return dp[index]=false;
+//             }
+//         }
+//         return dp[index]=false;
         
-    }
+//     }
     
     
     
