@@ -25,7 +25,24 @@ public:
         {
             st.insert(word);
         }
-        vector<int>dp(s.size()+1,-1);
-        return recur(0,s,st,wordDict,dp);
+        vector<bool>dp(s.size()+1,false);
+         dp[s.size()]=true;
+        for(int i=s.size()-1;i>=0;i--)
+        {
+            for(int j=i;j<s.size();j++)
+            { 
+                 string str=s.substr(i,j-i+1);
+            if(st.find(str)!=st.end())
+            {
+               
+               dp[i]=(dp[i] | dp[j+1]);
+                
+            }
+                
+            }
+           
+           
+        }
+        return dp[0];
     }
 };
