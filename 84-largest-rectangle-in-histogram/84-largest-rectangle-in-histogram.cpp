@@ -1,62 +1,75 @@
 class Solution {
-    private:
-    vector<int> next_small(vector<int> arr)
-    {   stack<int>s;
-        s.push(-1);
-         int n=arr.size();
-         vector<int> next(n);
-        for(int i=n-1;i>=0;i--)
-        {   int top=s.top();
-            while(top!=-1 && arr[top]>=arr[i])
-            {
-                s.pop();
-                top=s.top();
-            }
-             if(top==-1 || arr[top]<arr[i]){
-                 next[i]=top;
-                 s.push(i);
-             }
-        }
-     return next;
-    }
-    vector<int> prev_small(vector<int> arr)
-    {   stack<int>s;
-        s.push(-1);
-         int n=arr.size();
-         vector<int> prev(n);
-        
-        for(int i=0;i<n;i++)
-        {   int top=s.top();
-            while(top!=-1 && arr[top]>=arr[i])
-            {
-                s.pop();
-                top=s.top();
-            }
-             if(top==-1 || arr[top]<arr[i]){
-                 prev[i]=top;
-                 s.push(i);
-             }
-        }
-     return prev;
-    }
 public:
+    void prevSmaller(vector<int>&heights, vector<int>&prev_sm)
+    {
+        stack<int>s;
+        for(int i=0;i<heights.size();i++)
+        {  
+            while(!s.empty() && heights[s.top()]>=heights[i])
+            {
+                s.pop();
+                
+                
+            }
+            if(s.empty()) 
+            {
+                prev_sm[i]=-1;
+                s.push(i);
+            }
+            else if(heights[s.top()]<heights[i])
+            {
+                prev_sm[i]=s.top();
+                s.push(i);
+            }
+         
+        }
+    }
+    void nextSmaller(vector<int>&heights, vector<int>&next_sm)
+    {
+        stack<int>s;
+        for(int i=heights.size()-1;i>=0;i--)
+        {   
+            while(!s.empty() && heights[s.top()]>=heights[i])
+            {
+                s.pop();
+                
+            }
+            if(s.empty()) 
+            {next_sm[i]=-1;
+             s.push(i);
+            }
+            else if(heights[s.top()]<heights[i])
+            {
+                next_sm[i]=s.top();
+                s.push(i);
+                
+            }
+         
+        }
+    }
+    
+    
     
     int largestRectangleArea(vector<int>& heights) {
+        int n=heights.size();
+        vector<int>prev_sm(n,0),next_sm(n,0);
         int max_area=0;
-        vector<int>n,p;
-        n=next_small(heights);
-        p=prev_small(heights);
-        for(int i=0;i<heights.size();i++)
+        prevSmaller(heights,prev_sm);
+         nextSmaller(heights,next_sm);
+        for(int i=0;i<n;i++)
         {
-            int length=heights[i];
-            if(n[i]==-1)
+            
+            if(next_sm[i]==-1)
             {
-                n[i]=heights.size();
+                next_sm[i]=heights.size();
             }
-            int breadth=n[i]-p[i]-1;
-            int area=length*breadth;
+           int breadth=next_sm[i]-prev_sm[i]-1;
+            
+           int area=breadth*heights[i];
             max_area=max(max_area,area);
+            
         }
         return max_area;
-    }
+        
+}
 };
